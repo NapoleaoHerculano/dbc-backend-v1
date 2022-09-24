@@ -2,10 +2,7 @@ package com.napoleao.desafio.sicredi.modelos;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,5 +15,8 @@ public class Sessao {
 
     private LocalDateTime dataDeAbertura;
     private LocalDateTime dataDeFechamento;
+
+    @OneToOne
+    private Pauta pauta;
 
 }
