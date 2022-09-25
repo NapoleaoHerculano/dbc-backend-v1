@@ -2,6 +2,7 @@ package com.napoleao.desafio.sicredi.servicos;
 
 import com.napoleao.desafio.sicredi.dtos.AssociadoDto;
 import com.napoleao.desafio.sicredi.excecoes.AssociadoJaCadastradoException;
+import com.napoleao.desafio.sicredi.excecoes.AssociadoNaoEncontradoException;
 import com.napoleao.desafio.sicredi.formularios.AssociadoForm;
 import com.napoleao.desafio.sicredi.modelos.Associado;
 import com.napoleao.desafio.sicredi.repositorios.AssociadoRepository;
@@ -28,5 +29,13 @@ public class AssociadoService {
 
         return new AssociadoDto(associado);
 
+    }
+
+    public Associado findUserById(Long id) throws AssociadoNaoEncontradoException {
+        Optional<Associado> associadoOptional = associadoRepository.findById(id);
+        if (!associadoOptional.isPresent()){
+            throw new AssociadoNaoEncontradoException();
+        }
+        return associadoOptional.get();
     }
 }

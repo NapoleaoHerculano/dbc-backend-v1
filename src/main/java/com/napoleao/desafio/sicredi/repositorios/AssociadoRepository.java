@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface AssociadoRepository extends JpaRepository<Associado, Long> {
 
     Optional<Associado> findByCpf(String cpf);
+
+    Optional<Associado> findByLogin(String login);
 }

@@ -16,4 +16,8 @@ public class AssociadoForm {
     @NotBlank
     @CPF
     private String cpf;
+    @NotBlank
+    private String login;
+    @NotBlank
+    private String senha;
 }
