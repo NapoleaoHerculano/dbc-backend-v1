@@ -1,5 +1,6 @@
 package com.napoleao.desafio.sicredi.modelos;
 
+import com.napoleao.desafio.sicredi.formularios.PautaForm;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,4 +21,11 @@ public class Pauta {
 
     @OneToMany(mappedBy = "pauta")
     private List<Voto> votos = new ArrayList<>();
+
+    public Pauta() {
+    }
+
+    public Pauta(PautaForm pautaForm) {
+        this.descricao = pautaForm.getDescricao();
+    }
 }

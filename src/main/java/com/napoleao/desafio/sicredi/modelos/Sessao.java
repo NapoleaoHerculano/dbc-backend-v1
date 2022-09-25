@@ -19,4 +19,7 @@ public class Sessao {
     @OneToOne
     private Pauta pauta;
 
+    @ManyToOne
+    private Associado associado;
+
 }

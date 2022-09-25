@@ -31,6 +31,9 @@ public class Associado implements UserDetails {
     @OneToMany(mappedBy = "associado")
     private List<Voto> votos = new ArrayList<>();
 
+    @OneToMany(mappedBy = "associado")
+    private List<Sessao> sessoes = new ArrayList<>();
+
     public Associado() {
     }
 
