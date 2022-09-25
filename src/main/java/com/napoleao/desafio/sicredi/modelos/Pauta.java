@@ -2,10 +2,9 @@ package com.napoleao.desafio.sicredi.modelos;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,4 +14,10 @@ public class Pauta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descricao;
+
+    @ManyToOne
+    private Associado associado;
+
+    @OneToMany(mappedBy = "pauta")
+    private List<Voto> votos = new ArrayList<>();
 }
