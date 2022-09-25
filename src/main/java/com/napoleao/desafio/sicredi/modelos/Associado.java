@@ -1,5 +1,6 @@
 package com.napoleao.desafio.sicredi.modelos;
 
+import com.napoleao.desafio.sicredi.formularios.AssociadoForm;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,4 +22,12 @@ public class Associado {
 
     @OneToMany(mappedBy = "associado")
     private List<Voto> votos = new ArrayList<>();
+
+    public Associado() {
+    }
+
+    public Associado(AssociadoForm associadoForm){
+        this.nome = associadoForm.getNome();
+        this.cpf = associadoForm.getCpf();
+    }
 }
