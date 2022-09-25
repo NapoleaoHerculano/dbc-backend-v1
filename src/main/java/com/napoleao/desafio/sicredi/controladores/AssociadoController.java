@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/v1/associados")
 public class AssociadoController {
@@ -21,7 +23,7 @@ public class AssociadoController {
     private AssociadoService associadoService;
 
     @PostMapping
-    public ResponseEntity<AssociadoDto> cadastrarAssociado(@RequestBody AssociadoForm associadoForm){
+    public ResponseEntity<AssociadoDto> cadastrarAssociado(@RequestBody @Valid AssociadoForm associadoForm){
         try {
             return new ResponseEntity<>(associadoService.cadastrarAssociado(associadoForm), HttpStatus.CREATED);
         } catch (AssociadoJaCadastradoException e) {
