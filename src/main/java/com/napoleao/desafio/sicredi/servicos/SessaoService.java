@@ -3,6 +3,7 @@ package com.napoleao.desafio.sicredi.servicos;
 import com.napoleao.desafio.sicredi.dtos.SessaoDto;
 import com.napoleao.desafio.sicredi.excecoes.AssociadoNaoEncontradoException;
 import com.napoleao.desafio.sicredi.excecoes.PautaNaoEncontradaException;
+import com.napoleao.desafio.sicredi.excecoes.SessaoNaoEncontradaException;
 import com.napoleao.desafio.sicredi.formularios.SessaoForm;
 import com.napoleao.desafio.sicredi.modelos.Associado;
 import com.napoleao.desafio.sicredi.modelos.Pauta;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class SessaoService {
@@ -47,6 +49,14 @@ public class SessaoService {
         sessaoRepository.save(sessao);
 
         return new SessaoDto(sessao);
+    }
+
+    public Sessao buscarSessaoPeloId(Long id) throws SessaoNaoEncontradaException {
+        Optional<Sessao> sessaoOptional = sessaoRepository.findById(id);
+        if (!sessaoOptional.isPresent()){
+            throw new SessaoNaoEncontradaException();
+        }
+        return sessaoOptional.get();
     }
 
     private String recuperarTokenDoHeader(String token){
