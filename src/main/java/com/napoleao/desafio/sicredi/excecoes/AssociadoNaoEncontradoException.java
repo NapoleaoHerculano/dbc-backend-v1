@@ -4,4 +4,9 @@ public class AssociadoNaoEncontradoException extends Exception {
 
     public AssociadoNaoEncontradoException() {
     }
+
+    @Override
+    public String getMessage() {
+        return "Associado não encontrado!";
+    }
 }
