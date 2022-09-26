@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,5 +23,8 @@ public class Sessao {
 
     @ManyToOne
     private Associado associado;
+
+    @OneToMany(mappedBy = "sessao")
+    private List<Voto> votos = new ArrayList<>();
 
 }
