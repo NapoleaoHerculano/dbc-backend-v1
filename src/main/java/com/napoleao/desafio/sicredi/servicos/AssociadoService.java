@@ -1,7 +1,8 @@
 package com.napoleao.desafio.sicredi.servicos;
 
 import com.napoleao.desafio.sicredi.dtos.AssociadoDto;
-import com.napoleao.desafio.sicredi.excecoes.AssociadoJaCadastradoException;
+import com.napoleao.desafio.sicredi.excecoes.AssociadoComCpfJaCadastradoException;
+import com.napoleao.desafio.sicredi.excecoes.AssociadoComLoginJaCadastradoException;
 import com.napoleao.desafio.sicredi.excecoes.AssociadoNaoEncontradoException;
 import com.napoleao.desafio.sicredi.formularios.AssociadoForm;
 import com.napoleao.desafio.sicredi.modelos.Associado;
@@ -17,10 +18,15 @@ public class AssociadoService {
     @Autowired
     private AssociadoRepository associadoRepository;
 
-    public AssociadoDto cadastrarAssociado(AssociadoForm associadoForm) throws AssociadoJaCadastradoException {
+    public AssociadoDto cadastrarAssociado(AssociadoForm associadoForm) throws AssociadoComCpfJaCadastradoException, AssociadoComLoginJaCadastradoException {
         Optional<Associado> associadoOptional = associadoRepository.findByCpf(associadoForm.getCpf());
         if (associadoOptional.isPresent()){
-            throw new AssociadoJaCadastradoException();
+            throw new AssociadoComCpfJaCadastradoException();
+        }
+
+        associadoOptional = associadoRepository.findByLogin(associadoForm.getLogin());
+        if (associadoOptional.isPresent()){
+            throw new AssociadoComLoginJaCadastradoException();
         }
 
         Associado associado = new Associado(associadoForm);

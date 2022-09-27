@@ -1,7 +1,8 @@
 package com.napoleao.desafio.sicredi.controladores;
 
 import com.napoleao.desafio.sicredi.dtos.AssociadoDto;
-import com.napoleao.desafio.sicredi.excecoes.AssociadoJaCadastradoException;
+import com.napoleao.desafio.sicredi.excecoes.AssociadoComCpfJaCadastradoException;
+import com.napoleao.desafio.sicredi.excecoes.AssociadoComLoginJaCadastradoException;
 import com.napoleao.desafio.sicredi.formularios.AssociadoForm;
 import com.napoleao.desafio.sicredi.servicos.AssociadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class AssociadoController {
     public ResponseEntity<AssociadoDto> cadastrarAssociado(@RequestBody @Valid AssociadoForm associadoForm){
         try {
             return new ResponseEntity<>(associadoService.cadastrarAssociado(associadoForm), HttpStatus.CREATED);
-        } catch (AssociadoJaCadastradoException e) {
+        } catch (AssociadoComCpfJaCadastradoException | AssociadoComLoginJaCadastradoException e ) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
