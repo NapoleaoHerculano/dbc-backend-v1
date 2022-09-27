@@ -1,5 +1,6 @@
 package com.napoleao.desafio.sicredi.servicos;
 
+import com.napoleao.desafio.sicredi.dtos.ContabilizacaoDaSessaoDto;
 import com.napoleao.desafio.sicredi.dtos.VotoDto;
 import com.napoleao.desafio.sicredi.excecoes.*;
 import com.napoleao.desafio.sicredi.modelos.*;
@@ -53,6 +54,30 @@ public class VotoService {
         votoRepository.save(voto);
 
         return new VotoDto(voto);
+    }
+
+    public ContabilizacaoDaSessaoDto resultadoDaVotacao(Long idSessao) throws SessaoNaoEncontradaException {
+        Sessao sessao = sessaoService.buscarSessaoPeloId(idSessao);
+
+        Status status;
+        if (LocalDateTime.now().isAfter(sessao.getDataDeFechamento())){
+            status = Status.ENCERRADA;
+        }else {
+            status = Status.EM_ANDAMENTO;
+        }
+
+        Integer votosAFavor = votoRepository.contabilizarVotosAFavor(idSessao);
+        Integer votosContra = votoRepository.contabilizarVotosContra(idSessao);
+        Resultado resultado;
+        if (votosAFavor > votosContra) {
+            resultado = Resultado.APROVADA;
+        } else if (votosAFavor.equals(votosContra)) {
+            resultado = Resultado.EMPATE;
+        } else {
+            resultado = Resultado.REPROVADA;
+        }
+
+        return new ContabilizacaoDaSessaoDto(sessao, votosAFavor, votosContra, status, resultado);
     }
 
     private String recuperarTokenDoHeader(String token){

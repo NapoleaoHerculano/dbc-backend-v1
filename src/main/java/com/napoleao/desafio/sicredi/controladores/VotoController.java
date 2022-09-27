@@ -1,5 +1,6 @@
 package com.napoleao.desafio.sicredi.controladores;
 
+import com.napoleao.desafio.sicredi.dtos.ContabilizacaoDaSessaoDto;
 import com.napoleao.desafio.sicredi.dtos.VotoDto;
 import com.napoleao.desafio.sicredi.excecoes.*;
 import com.napoleao.desafio.sicredi.modelos.Decisao;
@@ -36,6 +37,15 @@ public class VotoController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AssociadoJaVotouNaPautaException | SessaoJaEncerradaException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @GetMapping("/sessao/{idSessao}/contabilizar")
+    public ResponseEntity<ContabilizacaoDaSessaoDto> resultadoDaVotacao(@PathVariable Long idSessao){
+        try{
+            return new ResponseEntity<>(votoService.resultadoDaVotacao(idSessao), HttpStatus.OK);
+        } catch (SessaoNaoEncontradaException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 }
