@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/v1/pautas")
 public class PautaController {
@@ -18,7 +20,7 @@ public class PautaController {
     private PautaService pautaService;
 
     @PostMapping
-    public ResponseEntity<PautaDto> cadastrarPauta(@RequestHeader("Authorization") String token, @RequestBody PautaForm pautaForm){
+    public ResponseEntity<PautaDto> cadastrarPauta(@RequestHeader("Authorization") String token, @RequestBody @Valid PautaForm pautaForm){
         try {
             return new ResponseEntity<>(pautaService.cadastrarPauta(token, pautaForm), HttpStatus.CREATED);
         } catch (AssociadoNaoEncontradoException e) {
