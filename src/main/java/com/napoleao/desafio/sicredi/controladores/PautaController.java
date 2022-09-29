@@ -24,7 +24,7 @@ public class PautaController {
         try {
             return new ResponseEntity<>(pautaService.cadastrarPauta(token, pautaForm), HttpStatus.CREATED);
         } catch (AssociadoNaoEncontradoException e) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
     }
 }
