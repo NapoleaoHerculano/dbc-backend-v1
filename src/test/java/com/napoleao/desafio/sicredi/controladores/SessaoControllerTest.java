@@ -79,7 +79,7 @@ public class SessaoControllerTest {
 
         testEntityManager.persist(pauta);
 
-        URI uri = new URI("/v1/sessao/abertura/pauta/" + pauta.getId());
+        URI uri = new URI("/v1/sessoes/abertura/pauta/" + pauta.getId());
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post(uri)
@@ -94,7 +94,7 @@ public class SessaoControllerTest {
     @Test
     public void deveriaRetornar404CasoAPautaPassadaNaoSejaValida() throws Exception{
 
-        URI uri = new URI("/v1/sessao/abertura/pauta/2");
+        URI uri = new URI("/v1/sessoes/abertura/pauta/2");
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post(uri)
@@ -115,7 +115,7 @@ public class SessaoControllerTest {
 
         testEntityManager.persist(pauta);
 
-        URI uri = new URI("/v1/sessao/abertura/pauta/" + pauta.getId());
+        URI uri = new URI("/v1/sessoes/abertura/pauta/" + pauta.getId());
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post(uri)
