@@ -79,7 +79,7 @@ public class SessaoControllerTest {
 
         testEntityManager.persist(pauta);
 
-        URI uri = new URI("/v1/sessao/abertura/pauta/1");
+        URI uri = new URI("/v1/sessao/abertura/pauta/" + pauta.getId());
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post(uri)
@@ -93,6 +93,7 @@ public class SessaoControllerTest {
 
     @Test
     public void deveriaRetornar404CasoAPautaPassadaNaoSejaValida() throws Exception{
+
         URI uri = new URI("/v1/sessao/abertura/pauta/2");
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -102,6 +103,32 @@ public class SessaoControllerTest {
                 .andExpect(MockMvcResultMatchers
                         .status()
                         .is(404));
+
+    }
+
+    @Test
+    public void deveriaRetornar400CasoAPautaPassadaJaTenhaUmaSessaoVinculada() throws Exception{
+
+        Pauta pauta = new Pauta();
+        pauta.setDescricao("Pauta Teste");
+        pauta.setAssociado(associado);
+
+        testEntityManager.persist(pauta);
+
+        URI uri = new URI("/v1/sessao/abertura/pauta/" + pauta.getId());
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post(uri)
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post(uri)
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers
+                        .status()
+                        .is(400));
 
     }
 }

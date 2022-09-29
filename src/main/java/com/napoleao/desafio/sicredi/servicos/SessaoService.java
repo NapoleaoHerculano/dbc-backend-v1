@@ -2,6 +2,7 @@ package com.napoleao.desafio.sicredi.servicos;
 
 import com.napoleao.desafio.sicredi.dtos.SessaoDto;
 import com.napoleao.desafio.sicredi.excecoes.AssociadoNaoEncontradoException;
+import com.napoleao.desafio.sicredi.excecoes.PautaComSessaoJaAbertaException;
 import com.napoleao.desafio.sicredi.excecoes.PautaNaoEncontradaException;
 import com.napoleao.desafio.sicredi.excecoes.SessaoNaoEncontradaException;
 import com.napoleao.desafio.sicredi.formularios.SessaoForm;
@@ -30,11 +31,16 @@ public class SessaoService {
     @Autowired
     private TokenService tokenService;
 
-    public SessaoDto abrirSessaoDeVotacao(String token, Long idPauta, SessaoForm sessaoForm) throws AssociadoNaoEncontradoException, PautaNaoEncontradaException {
+    public SessaoDto abrirSessaoDeVotacao(String token, Long idPauta, SessaoForm sessaoForm) throws AssociadoNaoEncontradoException, PautaNaoEncontradaException, PautaComSessaoJaAbertaException {
         Long idAssociado = tokenService.getUserIdInToken(recuperarTokenDoHeader(token));
         Associado associado = associadoService.findUserById(idAssociado);
 
         Pauta pauta = pautaService.buscarPautaPeloId(idPauta);
+
+        Optional<Sessao> sessaoOptional = sessaoRepository.findByPauta(pauta);
+        if (sessaoOptional.isPresent()){
+            throw new PautaComSessaoJaAbertaException();
+        }
 
         Sessao sessao = new Sessao();
         sessao.setAssociado(associado);

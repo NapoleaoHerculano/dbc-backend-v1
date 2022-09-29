@@ -2,6 +2,7 @@ package com.napoleao.desafio.sicredi.controladores;
 
 import com.napoleao.desafio.sicredi.dtos.SessaoDto;
 import com.napoleao.desafio.sicredi.excecoes.AssociadoNaoEncontradoException;
+import com.napoleao.desafio.sicredi.excecoes.PautaComSessaoJaAbertaException;
 import com.napoleao.desafio.sicredi.excecoes.PautaNaoEncontradaException;
 import com.napoleao.desafio.sicredi.formularios.SessaoForm;
 import com.napoleao.desafio.sicredi.servicos.SessaoService;
@@ -25,7 +26,9 @@ public class SessaoController {
         try {
             return new ResponseEntity<>(sessaoService.abrirSessaoDeVotacao(token, idPauta, sessaoForm), HttpStatus.CREATED);
         } catch (AssociadoNaoEncontradoException | PautaNaoEncontradaException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (PautaComSessaoJaAbertaException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 }
