@@ -28,7 +28,7 @@ public class AssociadoControllerTest {
         URI uri = new URI("/v1/associados");
         String requisicao = "{" +
                         "\"nome\":\"Chico dos Testes\"," +
-                        "\"cpf\":\"70607118482\"," +
+                        "\"cpf\":\"14836586003\"," +
                         "\"login\":\"chico.testes\"," +
                         "\"senha\":\"123456\"" +
                         "}";

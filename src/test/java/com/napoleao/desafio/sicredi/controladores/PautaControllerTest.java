@@ -41,7 +41,7 @@ public class PautaControllerTest {
     public void setUp() throws Exception{
         Associado associado = new Associado();
         associado.setNome("Chico dos Testes");
-        associado.setCpf("70607118482");
+        associado.setCpf("14836586003");
         associado.setLogin("chico.testes");
         associado.setSenha(new BCryptPasswordEncoder().encode("123456"));
 
