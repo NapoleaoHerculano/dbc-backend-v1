@@ -9,7 +9,7 @@ public class TokenDto {
     private String accessToken;
 
     private String type = "Bearer";
-    private String expiresIn = "3600";
+    private String expiresIn = "1800000";
 
     public TokenDto(String accessToken) {
         this.accessToken = accessToken;
