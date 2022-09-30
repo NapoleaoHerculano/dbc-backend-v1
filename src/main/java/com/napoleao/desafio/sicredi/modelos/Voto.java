@@ -13,11 +13,14 @@ public class Voto {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Decisao decisao = Decisao.SIM;
+    private Decisao decisao;
 
     @ManyToOne
     private Associado associado;
 
     @ManyToOne
     private Pauta pauta;
+
+    @ManyToOne
+    private Sessao sessao;
 }
