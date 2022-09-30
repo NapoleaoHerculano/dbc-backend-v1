@@ -28,7 +28,7 @@ public class SwaggerConfiguration {
         return new ApiInfoBuilder()
                 .title("Desafio Sicredi: API Assembléia de Votação")
                 .description("No cooperativismo, cada associado possui um voto e as decisões são tomadas em assembleias,\n" +
-                        "por votação. Essa solução backend para foi desenvolvida para gerenciar essas sessões de\n" +
+                        "por votação. Essa solução backend foi desenvolvida para gerenciar os associados, pautas e sessões de\n" +
                         "votação.")
                 .version("1.0.0")
                 .build();
